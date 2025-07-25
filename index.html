@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- estilo personalizado -->
+    <link rel="stylesheet" href="style.css">
+    <!-- estilos de las librerias -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- funcionalidades de las librerias -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js" defer></script>
+    <!-- funcionalidades personalizada -->
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Lusho-Box</h1>
+        <div class="dark-mode">
+            <button id="btnModoOscuro">Alternar Modo Oscuro</button>
+        </div>
+        <button id="view-cart-btn">Tus Compras (<span id="cart-count">0</span>)</button>
+    </header>
+
+    <main>
+        <section id="product-catalog">
+            <h2>Lo que necesites está aquí en Lusho-Box</h2>
+            <div id="product-list">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Lusho-Box Derechos Reservados</p>
+    </footer>
+</body>
+
+</html>
