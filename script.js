@@ -1,16 +1,8 @@
-//Swal.fire("SweetAlert2 is working!");
 
 document.addEventListener("DOMContentLoaded", function () {
     const productListDiv = document.getElementById("product-list");
     const viewCartBtn = document.getElementById("view-cart-btn");
     const cartCountSpan = document.getElementById("cart-count");
-
-    /*     
-        console.log(productListDiv);
-        console.log(viewCartBtn);
-        console.log(cartCountSpan); 
-        */
-
     //let cart = [];
     let cart = JSON.parse(localStorage.getItem("cart")) || []
     //console.log(cart)
@@ -21,19 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function fetchProducts() {
-        /*         
-                fetch("products.json")
-                  .then((resp) => {
-                    console.log(resp);
-                    return resp.json();
-                  })
-                  .then((data) => {
-                    console.log(data);
-                  })
-                  .catch((err) => {
-                    console.log("Error " + err);
-                  }); 
-        */
+
         try {
             const respuesta = await fetch("products.json")
             console.log(respuesta)
@@ -200,3 +180,187 @@ document.addEventListener("DOMContentLoaded", () => {
         body.classList.remove("dark-mode");
     }
 });
+
+//intento de filtrador
+
+const products = [
+    {
+        "id": 1,
+        "name": "MousePad de Oficina",
+        "description": 'computacion',
+        "price": 14.0,
+        "image": "https://images.unsplash.com/photo-1631098983935-5363b8e50edb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "id": 2,
+        "name": "MousePad de Oficina (negro)",
+        "description": 'computacion',
+        "price": 14.0,
+        "image": "https://images.unsplash.com/photo-1616071358409-ef30a44a90bb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "id": 3,
+        "name": "Monitor Curvo 27'",
+        "description": 'computacion',
+        "price": 250.0,
+        "image": "https://images.unsplash.com/photo-1666771409964-4656b1099ccb?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "id": 4,
+        "name": "Microfono Streaming",
+        "description": 'computacion',
+        "price": 50.0,
+        "image": "https://plus.unsplash.com/premium_photo-1664195074777-a7c40926f5c2?q=80&w=1340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+        "id": 5,
+        "name": "Notebook ASUS ROG",
+        "description": 'computacion',
+        "price": 2500.0,
+        "image": "https://media.falabella.com/falabellaCL/143321838_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 6,
+        "name": "Audifonos JBL",
+        "description": 'audifonos',
+        "price": 40.0,
+        "image": "https://media.falabella.com/falabellaCL/16919937_1/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 7,
+        "name": "Audifonos Recon 50",
+        "description": 'audifonos',
+        "price": 20.0,
+        "image": "https://media.falabella.com/falabellaCL/16905538_1/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 8,
+        "name": "Audifonos JBL Quantum 610",
+        "description": 'audifonos',
+        "price": 170.0,
+        "image": "https://media.falabella.com/falabellaCL/124348776_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 9,
+        "name": "Silla Gamer Profesional Reclinable",
+        "description": 'sillas',
+        "price": 60.0,
+        "image": "https://media.falabella.com/falabellaCL/144709250_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 10,
+        "name": "Silla Ergonómica Oficina Ejecutiva Reclinable",
+        "description": 'sillas',
+        "price": 130.0,
+        "image": "https://media.falabella.com/falabellaCL/138529890_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 11,
+        "name": "Silla Gamer RGB K-night Reclinable",
+        "description": 'sillas',
+        "price": 100.0,
+        "image": "https://media.falabella.com/falabellaCL/139611745_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 12,
+        "name": "Monitor Gamer 32 Curvo QHD 1440 VA 180Hz",
+        "description": 'computacion',
+        "price": 220.0,
+        "image": "https://media.falabella.com/falabellaCL/135833404_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 13,
+        "name": "Samsung Monitor Curvo 27 S36GD",
+        "description": 'computacion',
+        "price": 130.0,
+        "image": "https://media.falabella.com/falabellaCL/144313132_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 14,
+        "name": "Escritorio gamer 120x48x88 cm",
+        "description": 'escritorio',
+        "price": 90.0,
+        "image": "https://media.falabella.com/sodimacCL/8758980_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 15,
+        "name": "Escritorio Gamer Mesa Gamer Profesional",
+        "description": 'escritorio',
+        "price": 95.0,
+        "image": "https://media.falabella.com/falabellaCL/136612065_03/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 16,
+        "name": "Escritorio Gamer Negro-Rojo",
+        "description": 'escritorio',
+        "price": 70.0,
+        "image": "https://media.falabella.com/sodimacCL/6755119_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 17,
+        "name": "Notebook TUF Gaming A15",
+        "description": "computacion",
+        "price": 1300.0,
+        "image": "https://media.falabella.com/falabellaCL/17116449_01/w=1500,h=1500,fit=pad"
+    },
+    {
+        "id": 18,
+        "name": "Notebook Gamer Victus 15-FB2028LA",
+        "description": "computacion",
+        "price": 700.0,
+        "image": "https://media.falabella.com/falabellaCL/17459380_1/w=1500,h=1500,fit=pad"
+    }
+
+]
+
+const productDisplay = (productsToShow) => {
+    const productListDiv = document.getElementById("product-list");
+
+    productListDiv.innerHTML = "";
+        products.forEach((product) => {
+            const productCard = document.createElement("div");
+            productCard.classList.add("product-card");
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>$ ${product.price}</p>
+                <button data-id="${product.id}" >Agregar al carrito</button>
+            `;
+            productListDiv.appendChild(productCard)
+    }
+    )
+
+}
+
+const filterProducts = (description) => {
+    const productsToShow = products.filter(product => product.description === description)
+    productDisplay(productsToShow)
+}
+
+const computacion = document.getElementById("computacion")
+const sillas = document.getElementById("sillas-gamer")
+const audifonos = document.getElementById("audifonos")
+const escritorios = document.getElementById("escritorios")
+const todos = document.getElementById("todos")
+
+todos.addEventListener("click", () => {
+    productDisplay('products');
+});
+
+computacion.addEventListener("click", () => {
+    filterProducts("computacion");
+});
+
+sillas.addEventListener("click", () => {
+    filterProducts('sillas');
+});
+
+audifonos.addEventListener("click", () => {
+    filterProducts('audifonos');
+});
+
+escritorios.addEventListener("click", () => {
+    filterProducts('escritorios');
+});
+
+
