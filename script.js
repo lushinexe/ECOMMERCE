@@ -157,6 +157,65 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchProducts()
     updateCartCount()
 
+    const productDisplay = (productsToShow) => {
+        const productListDiv = document.getElementById("product-list");
+
+        productListDiv.innerHTML = "";
+            productsToShow.forEach((product) => {
+                const productCard = document.createElement("div");
+                productCard.classList.add("product-card");
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>$ ${product.price}</p>
+                    <button data-id="${product.id}" >Agregar al carrito</button>
+                `;
+                productListDiv.appendChild(productCard)
+        }
+        )
+
+        // Agregar event listeners para los botones "Agregar al carrito"
+        document.querySelectorAll(".product-card button").forEach((button) => {
+            button.addEventListener('click', (evt) => {
+                const productId = parseInt(evt.target.dataset.id);
+                const productToAdd = productsToShow.find((item) => item.id === productId)
+                if (productId) {
+                    addToCart(productToAdd)
+                }
+            })
+        })
+    }
+
+    const filterProducts = (description) => {
+        const productsToShow = products.filter(product => product.description === description)
+        productDisplay(productsToShow)
+    }
+
+    const computacion = document.getElementById("computacion")
+    const sillas = document.getElementById("sillas-gamer")
+    const audifonos = document.getElementById("audifonos")
+    const escritorios = document.getElementById("escritorios")
+    const todos = document.getElementById("todos")
+
+    todos.addEventListener("click", () => {
+        productDisplay(products);
+    });
+
+    computacion.addEventListener("click", () => {
+        filterProducts("computacion");
+    });
+
+    sillas.addEventListener("click", () => {
+        filterProducts('sillas');
+    });
+
+    audifonos.addEventListener("click", () => {
+        filterProducts('audifonos');
+    });
+
+    escritorios.addEventListener("click", () => {
+        filterProducts('escritorio');
+    });
 })
 
 const btnModoOscuro = document.getElementById("btnModoOscuro");
@@ -312,55 +371,3 @@ const products = [
     }
 
 ]
-
-const productDisplay = (productsToShow) => {
-    const productListDiv = document.getElementById("product-list");
-
-    productListDiv.innerHTML = "";
-        products.forEach((product) => {
-            const productCard = document.createElement("div");
-            productCard.classList.add("product-card");
-            productCard.innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <h3>${product.name}</h3>
-                <p>$ ${product.price}</p>
-                <button data-id="${product.id}" >Agregar al carrito</button>
-            `;
-            productListDiv.appendChild(productCard)
-    }
-    )
-
-}
-
-const filterProducts = (description) => {
-    const productsToShow = products.filter(product => product.description === description)
-    productDisplay(productsToShow)
-}
-
-const computacion = document.getElementById("computacion")
-const sillas = document.getElementById("sillas-gamer")
-const audifonos = document.getElementById("audifonos")
-const escritorios = document.getElementById("escritorios")
-const todos = document.getElementById("todos")
-
-todos.addEventListener("click", () => {
-    productDisplay('products');
-});
-
-computacion.addEventListener("click", () => {
-    filterProducts("computacion");
-});
-
-sillas.addEventListener("click", () => {
-    filterProducts('sillas');
-});
-
-audifonos.addEventListener("click", () => {
-    filterProducts('audifonos');
-});
-
-escritorios.addEventListener("click", () => {
-    filterProducts('escritorios');
-});
-
-
